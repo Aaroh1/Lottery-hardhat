@@ -13,5 +13,8 @@
     "@chainlink/contracts": "^0.5.1",
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
     "ethereum-waffle": "^3.2.0"
+  },
+  "mocha": {
+    "timeout": 10000000
   }
 }

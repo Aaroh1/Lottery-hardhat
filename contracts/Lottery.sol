@@ -13,7 +13,7 @@ error Lottery__TransferFailed();
 error Lottery__LotteryNotOpen();
 error Lottery__SendMoreToEnterLottery();
 
-contract Lottery is VRFConsumerBaseV2 {
+contract Lottery is VRFConsumerBaseV2,AutomationCompatibleInterface{
     enum LotteryState {
         OPEN,
         CALCULATING
@@ -21,10 +21,9 @@ contract Lottery is VRFConsumerBaseV2 {
     // Lottery Variables
     address public manager;
     address payable[] public players;
-    address payable recent_winner;
     LotteryState private s_lotteryState;
     uint256 private s_lastTimeStamp;
-    address private s_recentWinner;
+    address private recentWinner;
     uint private immutable i_interval;
     // Chainlink VRF Variables
     bytes32 private immutable i_gaslane;
@@ -98,14 +97,14 @@ contract Lottery is VRFConsumerBaseV2 {
         uint256[] memory _randomWords
     ) internal override {
         uint256 indexofwinner = _randomWords[0] % players.length;
-        address payable recentWinner = players[indexofwinner];
-        recent_winner = recentWinner;
+        address payable recent_Winner = players[indexofwinner];
+        recentWinner = recent_Winner;
         players = new address payable[](0);
         s_lotteryState = LotteryState.OPEN;
         s_lastTimeStamp = block.timestamp;
-        (bool success, ) = recent_winner.call{value: address(this).balance}("");
+        (bool success, ) = recentWinner.call{value: address(this).balance}("");
         if (!success) revert TX_NOT_SUCCESSFULL();
-        emit WinnerPicked(recent_winner);
+        emit WinnerPicked(recentWinner);
     }
 
     /**
@@ -178,7 +177,7 @@ contract Lottery is VRFConsumerBaseV2 {
     }
 
     function getRecentWinner() public view returns (address) {
-        return s_recentWinner;
+        return recentWinner;
     }
 
     function getPlayer(uint256 index) public view returns (address) {
