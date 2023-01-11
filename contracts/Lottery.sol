@@ -25,13 +25,13 @@ contract Lottery is VRFConsumerBaseV2,AutomationCompatibleInterface{
     uint256 private s_lastTimeStamp;
     address private recentWinner;
     uint private immutable i_interval;
-    // Chainlink VRF Variables
-    bytes32 private immutable i_gaslane;
-    uint64 private immutable i_subscriptionId;
-    uint16 constant REQUEST_CONFORMATIONS = 3;
-    uint32 private immutable i_callbackGaslimit;
-    uint32 private constant NUM_WORDS = 1;
-    VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
+        // Chainlink VRF Variables
+        bytes32 private immutable i_gaslane;
+        uint64 private immutable i_subscriptionId;
+        uint16 constant REQUEST_CONFORMATIONS = 3;
+        uint32 private immutable i_callbackGaslimit;
+        uint32 private constant NUM_WORDS = 1;
+        VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
     //Events
     event EnterLottery(address indexed player);
     event RequestedLotteryWinner(uint256 requestId);

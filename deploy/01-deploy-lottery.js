@@ -3,7 +3,7 @@ const {
     networkConfig,
     developmentChains,
     VERIFICATION_BLOCK_CONFIRMATIONS,
-} = require("../../helper-hardhat-config")
+} = require("../helper-hardhat-config")
 // const { verify } = require("../utils/verify")
 
 const FUND_AMOUNT = ethers.utils.parseEther("1") // 1 Ether, or 1e18 (10^18) Wei
